@@ -21,10 +21,11 @@ export const PomodoroCounter = ({
     const [isActive, setIsActive] = useState<boolean>(false);
 
 
-
-
     useEffect(() => {
         setIsActive(true) // добавить условие
+    }, [])
+
+    useEffect(() => {
         if (isActive) {
             let interval = setInterval(() => {
                 setTimeLeft((prevSeconds) => prevSeconds - 1);

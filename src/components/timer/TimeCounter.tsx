@@ -14,6 +14,10 @@ export const TimeCounter = ({
 
     useEffect(() => {
         setIsActive(true) // добавить условие
+    }, [])
+
+    useEffect(() => {
+
         if (isActive) {
             let interval = setInterval(() => {
                 setTimeLeft((prevSeconds) => prevSeconds - 1);
