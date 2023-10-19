@@ -5,6 +5,10 @@ import type { Metadata } from 'next'
 import { M_PLUS_Rounded_1c } from 'next/font/google'
 import SessionProvider from '@/components/providers/SessionProvider'
 import { getServerSession } from 'next-auth'
+import { TRPCProvider } from './_trpc/TRPCProvider'
+import { headers } from "next/headers";
+import { TRPCServerClient } from './_trpc/server'
+
 
 const M = M_PLUS_Rounded_1c({ subsets: ['latin', 'cyrillic'], weight: ['100', '400', '500', '700', '800', '900'] })
 
@@ -18,28 +22,29 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-
-  const session = await getServerSession()
-
+  const hello = await TRPCServerClient.timing.hello.query()
+  console.log(hello)
   return (
     <html lang="en">
-      <SessionProvider>
-        <body className={`${M.className} min-h-screen`}>
-          <div className='max-w-xl px-4 pt-4 mx-auto'>
-            <div className='grid grid-cols-2'>
-              <h1 className='text-2xl font-medium'>Pomofocus</h1>
-              <div className='flex items-center justify-end gap-3'>
-                <OptionsModal />
-                <ProfileButton />
+      <TRPCProvider headers={headers()}>
+        <SessionProvider>
+          <body className={`${M.className} min-h-screen`}>
+            <div className='max-w-xl px-4 pt-4 mx-auto'>
+              <div className='grid grid-cols-2'>
+                <h1 className='text-2xl font-medium'>{hello}</h1>
+                <div className='flex items-center justify-end gap-3'>
+                  <OptionsModal />
+                  <ProfileButton />
+                </div>
               </div>
+              <div className='divider'></div>
             </div>
-            <div className='divider'></div>
-          </div>
-          <div className='flex items-center justify-center max-w-xl p-6 mx-auto rounded-lg shadow-xl bg-neutral sm:p-14 '>
-            {children}
-          </div>
-        </body>
-      </SessionProvider>
+            <div className='flex items-center justify-center max-w-xl p-6 mx-auto rounded-lg shadow-xl bg-neutral sm:p-14 '>
+              {children}
+            </div>
+          </body>
+        </SessionProvider>
+      </TRPCProvider>
     </html>
   )
 }
