@@ -1,8 +1,15 @@
 'use client'
 import React, { useRef } from 'react'
-import { ThemeSelect } from './themeSelect/themeSelect'
+import { ThemeSelect } from './themeSelect/ThemeSelect'
+import { TimingOptions } from './TimingOptions'
+import { AutoStartOptions } from './AutoStartOptions'
 
-export const OptionsModal = () => {
+export const OptionsModal = ({
+
+}: {
+
+    }) => {
+
     const modalRef = useRef<HTMLDialogElement>(null);
 
     const openModal = () => {
@@ -18,6 +25,8 @@ export const OptionsModal = () => {
                 <div className="modal-box bg-accent">
                     <h3 className="text-lg font-bold text-accent-content">Options</h3>
                     <ThemeSelect />
+                    <TimingOptions />
+                    <AutoStartOptions />
                     <div className="modal-action">
                         <form method="dialog">
                             {/* if there is a button in form, it will close the modal */}

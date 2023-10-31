@@ -3,18 +3,25 @@ import React, { useState, useEffect } from 'react';
 import { formatTime } from '@/lib/utils';
 export const TimeCounter = ({
     time,
-    onTimeLeft
+    onTimeLeft,
+    autoStart
 }:
     {
-        time: number
+        time: number,
+        autoStart: boolean,
         onTimeLeft: (value: 'Pomodoro' | "Short break" | "Long break") => void
     }) => {
     const [timeLeft, setTimeLeft] = useState<number>(time); // seconds
     const [isActive, setIsActive] = useState<boolean>(false);
 
     useEffect(() => {
-        setIsActive(true) // добавить условие
-    }, [])
+        if (autoStart) {
+            setIsActive(true) // добавить условие
+        }
+    }, [autoStart])
+    useEffect(() => {
+        setTimeLeft(time)
+    }, [time]);
 
     useEffect(() => {
 
@@ -53,7 +60,7 @@ export const TimeCounter = ({
     return (
 
         <div className='flex flex-col gap-5'>
-            <div className='font-semibold text-neutral-content text-9xl'>
+            <div className='font-semibold text-neutral-content text-8xl sm:text-9xl'>
                 <span className="font-mono countdown">
                     <span style={{ "--value": minutes }}></span>:
                     <span style={{ "--value": seconds }}></span>

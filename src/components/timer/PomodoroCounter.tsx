@@ -7,12 +7,14 @@ const longBreakInterval = 4
 
 export const PomodoroCounter = ({
     time,
+    autoStart,
     onTimeLeft,
     pomodoroCounter,
-    setPomodoroCounter
+    setPomodoroCounter,
 }:
     {
         time: number,
+        autoStart: boolean,
         onTimeLeft: (value: 'Pomodoro' | "Short break" | "Long break") => void,
         pomodoroCounter: number,
         setPomodoroCounter: React.Dispatch<React.SetStateAction<number>>
@@ -22,8 +24,14 @@ export const PomodoroCounter = ({
 
 
     useEffect(() => {
-        setIsActive(true) // добавить условие
-    }, [])
+        if (autoStart) {
+            setIsActive(true) // добавить условие
+        }
+    }, [autoStart])
+
+    useEffect(() => {
+        setTimeLeft(time)
+    }, [time]);
 
     useEffect(() => {
         if (isActive) {
@@ -66,7 +74,7 @@ export const PomodoroCounter = ({
     return (
 
         <div className='flex flex-col gap-5'>
-            <div className='font-semibold text-neutral-content text-9xl'>
+            <div className='font-semibold text-neutral-content text-8xl sm:text-9xl'>
                 <span className="font-mono countdown">
                     <span style={{ "--value": minutes }}></span>:
                     <span style={{ "--value": seconds }}></span>
