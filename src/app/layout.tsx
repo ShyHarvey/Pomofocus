@@ -40,9 +40,8 @@ export default async function RootLayout({
               </div>
               <div className='divider'></div>
             </div>
-            <div className='flex items-center justify-center max-w-xl p-6 mx-auto rounded-lg shadow-xl bg-neutral sm:p-14 '>
-              {children}
-            </div>
+            {children}
+
             <Toaster />
           </body>
         </SessionProvider>
