@@ -1,7 +1,7 @@
 'use client'
-import Link from 'next/link'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { UserCircle2 } from 'lucide-react'
 
 
 export const ProfileButton = () => {
@@ -33,8 +33,7 @@ export const ProfileButton = () => {
         <div className="dropdown dropdown-end">
             <label tabIndex={0} >
                 <Avatar className='rounded cursor-pointer ring-primary hover:ring'>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback><UserCircle2 /></AvatarFallback>
                 </Avatar>
             </label>
             <ul tabIndex={0} className="z-10 w-56 dropdown-content menu bg-base-200 rounded-box">

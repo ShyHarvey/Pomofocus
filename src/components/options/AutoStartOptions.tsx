@@ -28,8 +28,6 @@ export const AutoStartOptions: React.FC<{}> = () => {
             })
         },
     })
-    const [fields, setFields] = useState<FormValues>()
-    const debouncedFields = useDebounce(fields, 1000)
 
     const { register, handleSubmit, setValue } = useForm<FormValues>()
     const { onChange: onChangeShortBreak } = register("isAutoStartBreaks")
@@ -42,6 +40,8 @@ export const AutoStartOptions: React.FC<{}> = () => {
         }
     }, [optionsData, setValue])
 
+    const [fields, setFields] = useState<FormValues>()
+    const debouncedFields = useDebounce(fields, 1000)
     useEffect(() => {
         if (debouncedFields) {
             mutate({

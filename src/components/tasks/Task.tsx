@@ -3,15 +3,33 @@ import React, { useState, useRef } from 'react'
 import { Check, Pencil } from 'lucide-react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { cn } from '@/lib/utils'
+import type { TaskType } from '@/app/types/TaskType'
+import { useLocalTasks } from '@/hooks/useLocalTasks'
 
-export const Task = () => {
+export const Task = (
+    {
+        id,
+        title,
+        estPomodoro,
+        actPomodoro,
+        note,
+        projectName,
+        order
+    }: TaskType) => {
     const ref = useRef(null)
     const [isDone, setIsDone] = useState(false)
     const [isActive, setIsActive] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
 
+    const { Tasks, setTasks } = useLocalTasks()
+
+
+    const onDelete = () => {
+        const updatedTasks = Tasks.filter(task => task.id !== id)
+        setTasks(updatedTasks)
+    }
+
     const handleClickOutside = () => {
-        console.log("click outside")
         setIsEditing(false)
     }
 
@@ -25,23 +43,30 @@ export const Task = () => {
                     "transition-all border-l-4 border-base-100 shadow-xl my-1 card bg-base-100"
                 )}>
                 <div className='card-body'>
-                    <h2 className="card-title">Editing</h2>
                     <div className="w-full form-control">
-                        <input type="text" placeholder="Title" className="w-full input input-bordered" />
+                        <input defaultValue={title} type="text" placeholder="Title" className="w-full input input-bordered" />
                     </div>
-                    <textarea className="textarea textarea-bordered" placeholder="Note"></textarea>
-                    <div className="justify-end card-actions">
+                    <textarea defaultValue={note} className="textarea textarea-bordered" placeholder="Note"></textarea>
+                    <div className='flex justify-between'>
                         <button
-                            onClick={() => setIsEditing(!isEditing)}
-                            className='btn btn-ghost btn-sm'>
-                            Close
+                            onClick={onDelete}
+                            className='btn btn-sm btn-ghost'>
+                            Delete
                         </button>
-                        <button className='btn btn-sm'>Save</button>
+                        <div className="justify-end card-actions">
+                            <button
+                                onClick={() => setIsEditing(!isEditing)}
+                                className='btn btn-ghost btn-sm'>
+                                Close
+                            </button>
+                            <button className='btn btn-sm'>Save</button>
+                        </div>
                     </div>
                 </div>
             </div>
         )
     }
+
 
 
     return (
@@ -63,9 +88,9 @@ export const Task = () => {
             >
                 <Check />
             </button>
-            <div className="card-body">
-                <h2 className="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+            <div className=" card-body">
+                <h2 className="card-title">{title}</h2>
+                <p>{note}</p>
             </div>
             <button
                 onClick={(e) => {
