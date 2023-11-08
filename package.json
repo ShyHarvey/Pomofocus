@@ -22,6 +22,7 @@
     "@trpc/react-query": "^10.40.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "framer-motion": "^10.16.4",
     "lucide-react": "^0.291.0",
     "next": "latest",
     "next-auth": "^4.23.2",

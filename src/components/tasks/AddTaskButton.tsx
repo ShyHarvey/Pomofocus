@@ -13,7 +13,7 @@ type FormValues = {
 }
 
 export const AddTaskButton = () => {
-    const ref = useRef(null)
+    const ref = useRef<HTMLDivElement>(null)
     const [isAdding, setIsAdding] = useState(false)
     const { Tasks, setTasks } = useLocalTasks()
 
@@ -22,15 +22,19 @@ export const AddTaskButton = () => {
     }
     useOnClickOutside(ref, handleClickOutside)
 
+    const scrollToBottom = (delay?: number) => {
+        //таймаут нужен чтобы элемент сначала таска сменилась на
+        // форму, а уже потом проскроллилась. Иначе скролл работает криво
+        setTimeout(() =>
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            }), delay ?? 0)
+    }
+
+
     const { register, handleSubmit, setValue } = useForm<FormValues>()
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        setValue("title", "")
-        setValue("note", "")
-        console.log({
-            title: data.title,
-            note: data.note
-        })
-
         setTasks([
             ...Tasks,
             {
@@ -43,6 +47,8 @@ export const AddTaskButton = () => {
                 projectName: ''
             }
         ])
+        setValue("title", "")
+        setValue("note", "")
     }
 
     if (isAdding) {
@@ -64,7 +70,7 @@ export const AddTaskButton = () => {
                                 minLength={1} />
                         </div>
                         <textarea
-                            {...register("note", { minLength: 1 })}
+                            {...register("note")}
                             className="textarea textarea-bordered"
                             placeholder="Note"></textarea>
                         <div className="justify-end card-actions">
@@ -73,7 +79,7 @@ export const AddTaskButton = () => {
                                 className='btn btn-ghost btn-sm'>
                                 Close
                             </button>
-                            <button type='submit' className='btn btn-sm'>Save</button>
+                            <button onClick={() => scrollToBottom(100)} type='submit' className='btn btn-sm'>Save</button>
                         </div>
                     </div>
                 </div>
@@ -82,11 +88,16 @@ export const AddTaskButton = () => {
     }
 
     return (
-        <button
-            onClick={() => setIsAdding(true)}
-            className='mt-4 btn btn-block btn-lg btn-neutral'>
-            <PlusCircle />
-            Add task
-        </button>
+        <div ref={ref}>
+            <button
+                onClick={() => {
+                    setIsAdding(true)
+                    scrollToBottom()
+                }}
+                className='mt-4 btn btn-block btn-lg btn-neutral'>
+                <PlusCircle />
+                Add task
+            </button>
+        </div>
     )
 }

@@ -41,7 +41,7 @@ export const AutoStartOptions: React.FC<{}> = () => {
     }, [optionsData, setValue])
 
     const [fields, setFields] = useState<FormValues>()
-    const debouncedFields = useDebounce(fields, 1000)
+    const debouncedFields = useDebounce(fields, 500)
     useEffect(() => {
         if (debouncedFields) {
             mutate({
