@@ -1,7 +1,7 @@
 import { ProfileButton } from '@/components/profileButton/ProfileButton'
 import { OptionsModal } from '@/components/options/OptionsModal'
 import type { Metadata } from 'next'
-import { M_PLUS_Rounded_1c } from 'next/font/google'
+import { Comfortaa } from 'next/font/google'
 import SessionProvider from '@/components/providers/SessionProvider'
 import { TRPCProvider } from './_trpc/TRPCProvider'
 import { headers } from "next/headers";
@@ -11,7 +11,7 @@ import './globals.css'
 import { Toaster } from '@/components/ui/toast/toaster'
 
 
-const M = M_PLUS_Rounded_1c({ subsets: ['latin', 'cyrillic'], weight: ['100', '400', '500', '700', '800', '900'] })
+const Comfort = Comfortaa({ subsets: ['latin', 'cyrillic'], weight: ['300', '400', '500', '700'] })
 
 export const metadata: Metadata = {
   title: 'Pomodoro',
@@ -29,7 +29,7 @@ export default async function RootLayout({
     <html lang="en">
       <TRPCProvider headers={headers()}>
         <SessionProvider>
-          <body className={`${M.className} min-h-screen px-2`}>
+          <body className={`${Comfort.className} min-h-screen px-2`}>
             <div className='max-w-xl px-4 pt-4 mx-auto'>
               <div className='grid grid-cols-2'>
                 <h1 className='text-2xl font-medium'>Pomodoro</h1>
