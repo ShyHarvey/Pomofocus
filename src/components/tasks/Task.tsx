@@ -133,8 +133,8 @@ export const Task = (
                     setIsDone(!isDone)
                 }}
                 className={cn(
-                    'self-center btn btn-sm ml-2 btn-circle transition-colors duration-200',
-                    isDone ? 'btn-primary' : 'btn-ghost'
+                    'self-center btn btn-sm ml-2 btn-circle transition-colors  duration-200',
+                    isDone ? 'btn-primary' : 'btn-ghost opacity-30'
                 )}
             >
                 <Check />

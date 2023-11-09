@@ -76,8 +76,8 @@ export const PomodoroCounter = ({
         <div className='flex flex-col gap-5'>
             <div className='font-semibold text-neutral-content text-8xl sm:text-9xl'>
                 <span className="font-mono countdown">
-                    <span style={{ "--value": minutes }}></span>:
-                    <span style={{ "--value": seconds }}></span>
+                    <span style={{ "--value": `${minutes}` } as React.CSSProperties}></span>:
+                    <span style={{ "--value": `${minutes}` } as React.CSSProperties}></span>
                 </span>
             </div>
 
