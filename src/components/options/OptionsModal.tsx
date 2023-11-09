@@ -1,6 +1,6 @@
 'use client'
 import React, { useRef } from 'react'
-import { ThemeSelect } from '@/components/options/themeSelect/ThemeSelect'
+import { ThemeSelect } from '@/components/options/themeSelect'
 import { TimingOptions } from '@/components/options/TimingOptions'
 import { AutoStartOptions } from '@/components/options/AutoStartOptions'
 
