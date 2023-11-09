@@ -1,8 +1,8 @@
 'use client'
 import React, { useRef } from 'react'
-import { ThemeSelect } from './themeSelect/ThemeSelect'
-import { TimingOptions } from './TimingOptions'
-import { AutoStartOptions } from './AutoStartOptions'
+import { ThemeSelect } from '@/components/options/themeSelect/ThemeSelect'
+import { TimingOptions } from '@/components/options/TimingOptions'
+import { AutoStartOptions } from '@/components/options/AutoStartOptions'
 
 export const OptionsModal = ({
 
