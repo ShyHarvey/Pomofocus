@@ -24,7 +24,7 @@ export const Tasks = () => {
             <div className='grid w-full grid-cols-2 gap-4'>
                 <h4 className='self-center text-lg font-bold'>Tasks</h4>
                 {/* <button className='ml-auto border-none btn btn-sm btn-ghost w-fit'><GripVertical /></button> */}
-                <div className="ml-auto dropdown">
+                <div className="ml-auto dropdown dropdown-end">
                     <label tabIndex={0} className="border-none btn btn-sm btn-ghost w-fit"><GripVertical /></label>
                     <ul tabIndex={0} className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                         <li><button
