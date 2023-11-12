@@ -15,7 +15,7 @@ export default function Home() {
       <div className='flex items-center justify-center max-w-xl p-6 mx-auto rounded-lg shadow-xl bg-neutral sm:p-14 '>
         <Timer />
       </div>
-      <div className='flex items-center justify-center w-full max-w-xl p-2 mx-auto sm:p-4 '>
+      <div className='flex items-center justify-center max-w-xl p-2 mx-auto sm:p-4 '>
         <Tasks />
       </div>
     </>

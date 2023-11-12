@@ -21,9 +21,9 @@ export const OptionsModal = ({
     return (
         <>
             <button className="btn btn-sm" onClick={openModal}>options</button>
-            <dialog ref={modalRef} className="modal">
-                <div className="modal-box bg-accent">
-                    <h3 className="text-lg font-bold text-accent-content">Options</h3>
+            <dialog ref={modalRef} className="max-w-full max-h-full modal ">
+                <div className="max-w-sm modal-box bg-accent">
+                    <h3 className="text-lg font-bold text-accent-content ">Options</h3>
                     <ThemeSelect />
                     <TimingOptions />
                     <AutoStartOptions />
