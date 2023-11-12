@@ -1,11 +1,12 @@
 'use client'
 import React, { useState, useRef } from 'react'
-import { Check, Pencil } from 'lucide-react'
+import { Activity, Check, Grip, Pencil } from 'lucide-react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { cn } from '@/lib/utils'
 import type { TaskType } from '@/app/types/TaskType'
 import { useLocalTasks } from '@/hooks/useLocalTasks'
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Reorder, useDragControls } from "framer-motion"
 
 
 type FormValues = {
@@ -21,14 +22,26 @@ export const Task = (
         actPomodoro,
         note,
         projectName,
-        order
-    }: TaskType, ref: React.ForwardedRef<HTMLDivElement>) => {
+        order,
+        reorderItem
+    }: {
+        id: string;
+        title: string;
+        estPomodoro: number;
+        actPomodoro: number;
+        note: string;
+        projectName: string;
+        order: number;
+        reorderItem: TaskType
+    }) => {
     const clickOutsideRef = useRef<HTMLDivElement>(null)
     const [isDone, setIsDone] = useState(false)
     const [isActive, setIsActive] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
 
     const { Tasks, setTasks } = useLocalTasks()
+
+    const controls = useDragControls()
 
     const { register, handleSubmit, setValue } = useForm<FormValues>({
         defaultValues: {
@@ -65,7 +78,7 @@ export const Task = (
     useOnClickOutside(clickOutsideRef, handleClickOutside)
 
     const scrollToCenter = () => {
-        //таймаут нужен чтобы элемент сначала таска сменилась на
+        //таймаут нужен чтобы сначала таска сменилась на
         // форму, а уже потом проскроллилась. Иначе скролл работает криво
         setTimeout(() => {
             if (clickOutsideRef.current) {
@@ -119,43 +132,64 @@ export const Task = (
 
 
     return (
-        <div
-            ref={clickOutsideRef}
-            className={cn(
-                "transition-all duration-100 border-l-4 shadow-xl my-1 cursor-pointer card card-side border-primary bg-base-100",
-                isActive ? "border-primary" : "border-primary/10 hover:border-primary/50"
-            )}
-            onClick={() => setIsActive(!isActive)}
+        <Reorder.Item
+            value={reorderItem}
+            dragListener={false}
+            dragControls={controls}
         >
-            <button
-                onClick={(e) => {
-                    e.stopPropagation()
-                    setIsDone(!isDone)
-                }}
+
+            <div
+                ref={clickOutsideRef}
                 className={cn(
-                    'self-center btn btn-sm ml-2 btn-circle transition-colors  duration-200',
-                    isDone ? 'btn-primary' : 'btn-ghost opacity-30'
+                    "transition-all duration-100 border-l-4 shadow-xl my-1 card card-side border-primary bg-base-100",
+                    isActive ? "border-primary" : "border-primary/10 hover:border-primary/50"
                 )}
             >
-                <Check />
-            </button>
-            <div className=" card-body">
-                <h2 className="card-title">{title}</h2>
-                <p>{note}</p>
+                <div className='flex flex-col justify-around'>
+                    <div className="tooltip" data-tip={isActive ? "make inactive" : "make active"}>
+                        <button
+                            onClick={() => setIsActive(!isActive)}
+                            className='self-start ml-2 mr-2 btn btn-sm btn-circle btn-ghost'>
+                            <Activity size={16} />
+                        </button>
+                    </div>
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setIsDone(!isDone)
+                        }}
+                        className={cn(
+                            'self-center btn btn-sm ml-2 btn-circle transition-colors  duration-200',
+                            isDone ? 'btn-primary' : 'btn-ghost opacity-30'
+                        )}
+                    >
+                        <Check />
+                    </button>
+                </div>
+                <div className=" card-body">
+                    <h2 className="card-title">{title}</h2>
+                    <p>{note}</p>
+                </div>
+                <div className='flex flex-col justify-around'>
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setIsEditing(!isEditing)
+                            scrollToCenter()
+                        }}
+                        className='self-start ml-2 mr-2 btn btn-sm btn-circle btn-ghost'>
+                        <Pencil size={16} />
+                    </button>
+                    <button
+                        onClick={(e) => e.stopPropagation()}
+                        onPointerDown={(e) => controls.start(e)}
+                        className='self-start ml-2 mr-2 cursor-grab btn btn-sm btn-circle btn-ghost'>
+                        <Grip size={20} />
+                    </button>
+                    <p><span>{actPomodoro}</span><span className='opacity-50'>/{estPomodoro}</span></p>
+                </div>
             </div>
-            <div className='flex flex-col justify-around'>
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        setIsEditing(!isEditing)
-                        scrollToCenter()
-                    }}
-                    className='self-start ml-2 mr-2 btn btn-sm btn-circle btn-ghost'>
-                    <Pencil size={15} />
-                </button>
-                <p><span>{actPomodoro}</span>/<span className='opacity-50'>{estPomodoro}</span></p>
-            </div>
-        </div>
+        </Reorder.Item>
     )
 }
 
