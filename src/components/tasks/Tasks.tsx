@@ -10,14 +10,14 @@ import type { TaskType } from '@/app/types/TaskType'
 
 export const Tasks = () => {
 
-    const { Tasks, setTasks } = useLocalTasks()
+    const { tasks, setTasks } = useLocalTasks()
 
     const [localTasks, setLocalTasks] = useState<TaskType[]>([])
 
 
     useEffect(() => {
-        setLocalTasks(Tasks)
-    }, [Tasks])
+        setLocalTasks(tasks)
+    }, [tasks])
 
     return (
         <div className='flex flex-col items-center w-full'>

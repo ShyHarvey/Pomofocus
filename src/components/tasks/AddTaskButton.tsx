@@ -15,7 +15,7 @@ type FormValues = {
 export const AddTaskButton = () => {
     const ref = useRef<HTMLDivElement>(null)
     const [isAdding, setIsAdding] = useState(false)
-    const { Tasks, setTasks } = useLocalTasks()
+    const { tasks, setTasks } = useLocalTasks()
 
     const handleClickOutside = () => {
         setIsAdding(false)
@@ -36,14 +36,14 @@ export const AddTaskButton = () => {
     const { register, handleSubmit, setValue } = useForm<FormValues>()
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         setTasks([
-            ...Tasks,
+            ...tasks,
             {
                 id: uuidv4(),
                 actPomodoro: 0,
                 estPomodoro: 1,
                 note: data.note,
                 title: data.title,
-                order: Tasks.length,
+                order: tasks.length,
                 projectName: ''
             }
         ])

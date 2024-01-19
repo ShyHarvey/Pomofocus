@@ -4,6 +4,6 @@ import { useLocalStorage } from 'usehooks-ts'
 
 
 export function useLocalTasks() {
-    const [Tasks, setTasks] = useLocalStorage<TaskType[]>("LocalTasksPomodoro", [])
-    return { Tasks, setTasks }
+    const [tasks, setTasks] = useLocalStorage<TaskType[]>("LocalTasksPomodoro", [])
+    return { tasks, setTasks }
 }

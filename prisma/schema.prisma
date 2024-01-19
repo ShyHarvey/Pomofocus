@@ -34,6 +34,18 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Task {
+    id          String  @id @default(cuid())
+    title       String
+    estPomodoro Int
+    actPomodoro Int
+    note        String?
+    projectName String?
+    order       Int?
+    User        User?   @relation(fields: [userId], references: [id])
+    userId      String?
+}
+
 model User {
     id                   String    @id @default(cuid())
     name                 String?
@@ -42,6 +54,7 @@ model User {
     image                String?
     accounts             Account[]
     sessions             Session[]
+    tasks                Task[]
     theme                String    @default("dark")
     timing               Int[]     @default([25, 5, 15])
     isAutoStartPomodoros Boolean   @default(false)

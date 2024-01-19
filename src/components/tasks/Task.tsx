@@ -39,7 +39,7 @@ export const Task = (
     const [isActive, setIsActive] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
 
-    const { Tasks, setTasks } = useLocalTasks()
+    const { tasks, setTasks } = useLocalTasks()
 
     const controls = useDragControls()
 
@@ -50,7 +50,7 @@ export const Task = (
         }
     })
     const onSubmit: SubmitHandler<FormValues> = (data) => {
-        const updatedTasks = Tasks.map((task) => {
+        const updatedTasks = tasks.map((task) => {
             if (task.id === id) {
                 return {
                     ...task,
@@ -67,7 +67,7 @@ export const Task = (
 
 
     const onDelete = () => {
-        const updatedTasks = Tasks.filter(task => task.id !== id)
+        const updatedTasks = tasks.filter(task => task.id !== id)
         setTasks(updatedTasks)
     }
 
@@ -146,7 +146,7 @@ export const Task = (
                 )}
             >
                 <div className='flex flex-col justify-around'>
-                    <div className="tooltip" data-tip={isActive ? "make inactive" : "make active"}>
+                    <div className="sm:tooltip" data-tip={isActive ? "make inactive" : "make active"}>
                         <button
                             onClick={() => setIsActive(!isActive)}
                             className='self-start ml-2 mr-2 btn btn-sm btn-circle btn-ghost'>
@@ -183,7 +183,7 @@ export const Task = (
                     <button
                         onClick={(e) => e.stopPropagation()}
                         onPointerDown={(e) => controls.start(e)}
-                        className='self-start ml-2 mr-2 cursor-grab btn btn-sm btn-circle btn-ghost'>
+                        className='self-start hidden ml-2 mr-2 cursor-grab btn btn-sm btn-circle btn-ghost sm:block'>
                         <Grip size={20} />
                     </button>
                     <p><span>{actPomodoro}</span><span className='opacity-50'>/{estPomodoro}</span></p>

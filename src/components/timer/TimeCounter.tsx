@@ -1,6 +1,9 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { formatTime } from '@/lib/utils';
+import { Howl, Howler } from 'howler';
+import { useSound } from '@/hooks/useSound';
+
 export const TimeCounter = ({
     time,
     onTimeLeft,
@@ -13,6 +16,7 @@ export const TimeCounter = ({
     }) => {
     const [timeLeft, setTimeLeft] = useState<number>(time); // seconds
     const [isActive, setIsActive] = useState<boolean>(false);
+    const { soundState, currentSound } = useSound()
 
     useEffect(() => {
         if (autoStart) {
@@ -32,7 +36,7 @@ export const TimeCounter = ({
 
             if (timeLeft === 0) {
                 clearInterval(interval);
-
+                soundState.play(currentSound)
                 setTimeout(() => {
                     setIsActive(false)
                     setTimeLeft(time)
@@ -74,7 +78,6 @@ export const TimeCounter = ({
                     <button className='w-2/5 btn btn-primary no-animation' onClick={startTimer}>Start</button>
                 }
             </div>
-
         </div>
     )
 }
