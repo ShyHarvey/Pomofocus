@@ -10,7 +10,7 @@ export function useSound() {
         }
     });
 
-    const [currentSound, setCurrentSound] = useLocalStorage<string>('currentSound', '')
+    const [currentSound, setCurrentSound] = useLocalStorage<string>('currentSound', 'happyBells')
     const [volume, setVolume] = useLocalStorage<number>('volume', 10)
     return { soundState, currentSound, setCurrentSound, volume, setVolume }
 }

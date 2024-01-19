@@ -9,17 +9,11 @@ import { useEffect, useRef, useState } from 'react';
 
 export const SoundOptions = () => {
     const {
+        soundState,
         currentSound,
         setCurrentSound,
         volume,
         setVolume } = useSound()
-    const soundState = new Howl({
-        src: ['sprites.m4a'],
-        sprite: {
-            arcadeBonus: [0, 2000],
-            happyBells: [2000, 3000],
-        }
-    });
     const soundRef = useRef<Howl | null>(soundState);
 
     const [localVolume, setLocalVolume] = useState(10)
